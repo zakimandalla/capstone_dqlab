@@ -125,7 +125,7 @@ st.altair_chart(pengangguran_chart,use_container_width=True)
 #Kesimpulan Pengangguran
 st.markdown("""<div style="text-align: justify">
  
-Dari bar chart diatas kita tahu bahwa Tingkat Pengangguran 3 Provinsi bernilai diatas rata-rata dan 3 lainnya dibawah rata-rata. dari 6 provinsi di pulau jawa berada dibawah rata-rata nasional. Sehingga Tingkat pengangguran mungkin tidak mempengaruhi PDRB per Kapita suatu daerah.
+Dari bar chart diatas kita tahu bahwa Tingkat Pengangguran 3 Provinsi bernilai diatas rata-rata dan 3 lainnya dibawah rata-rata nasional. Sehingga Tingkat pengangguran mungkin tidak mempengaruhi PDRB per Kapita suatu daerah.
 
 </div>
 """, unsafe_allow_html=True)
@@ -174,9 +174,10 @@ st.altair_chart(sektor_chart,use_container_width=True)
 #Kesimpulan Sektor
 st.markdown("""<div style="text-align: justify">
  
-Kesimpulan dari bar chart Sektor.
+Dari bar chart diatas kita tahu bahwa 4 dari 6 Provinsi di pulau jawa bernilai dibawah rata-rata persentase nasional. Sehingga persentase DPRB 6 sektor teratas mempengaruhi PDRB per Kapita suatu daerah.
 
-Lanjut analisa berikutnya</div>
+Sehingga penulis merekomendasikan untuk pemerintas dan pemilik usaha sektor terkait bekerja sama berinvestasi untuk meningkatkan segala aspek di sektor tersebut.
+</div>
 """, unsafe_allow_html=True)
 
 #hitung data hijau
