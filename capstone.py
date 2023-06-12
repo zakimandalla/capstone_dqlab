@@ -17,7 +17,7 @@ Pulau Jawa merupakan salah satu pulau terbesar di Indonesia dan memiliki peran p
 Berdasarkan data Badan Pusat Statistik (BPS), PDRB per kapita di Jawa Tengah pada tahun 2021 merupakan yang terendah di Pulau Jawa. Angka tersebut sebesar Rp38,67 juta, jauh di bawah rata-rata nasional sebesar Rp62,24 juta per tahun. Empat provinsi lainnya, yaitu DI Yogyakarta, Jawa Barat, Banten, dan Jawa Timur, juga memiliki PDRB per kapita lebih rendah dari rata-rata nasional. DKI Jakarta memiliki PDRB per kapita yang tertinggi di Pulau Jawa, yaitu Rp274,71 juta per tahun. PDRB per kapita atau PDB per kapita adalah indikator penting dalam mengukur tingkat kemakmuran suatu wilayah, menunjukkan tingkat pembangunan dan pendapatan penduduk (Katadata, 2022).</div>
 """, unsafe_allow_html=True)
 
-pdrbperkapita = pd.read_excel('F:/DQLab Tetris Batch 3/Capstone/Dataset/[Seri 2010] PDRB Atas Dasar Harga Konstan Menurut Subsektor Lapangan Usaha Tahunan/Indonesia/PDRB Per Kapita Edit.xlsx')
+pdrbperkapita = pd.read_excel('dataset/PDRB Per Kapita-Rapi.xlsx')
 
 freq = st.selectbox("Freq", ['Pulau Jawa','Seluruh Indonesia'])
 
@@ -40,7 +40,7 @@ st.markdown("""<div style="text-align: justify">
 Selanjutnya dicari mengapa demikian. Ada beberapa faktor yang mempengaruhi: UMP, Tingkat pengangguran, Sektor Usaha, dll.</div>
 """, unsafe_allow_html=True)
 
-data_ump = pd.read_excel('C:/Users/Mandalla/UMP 2018-2020.xlsx')
+data_ump = pd.read_excel('dataset/UMP 2018-2020.xlsx')
 
 ump_bar = alt.Chart(data_ump).mark_bar().encode(
     alt.X('Provinsi', title='Provinsi'),
@@ -71,7 +71,7 @@ Kesimpulan dari bar chart UMP.
 Lanjut analisa berikutnya</div>
 """, unsafe_allow_html=True)
 
-data_pengangguran = pd.read_excel('F:/DQLab Tetris Batch 3/Capstone/Dataset/Tingkat Pengangguran.xlsx')
+data_pengangguran = pd.read_excel('dataset/Tingkat Pengangguran.xlsx')
 
 pengangguran_bar = alt.Chart(data_pengangguran).mark_bar().encode(
     alt.X('Provinsi', title='Provinsi'),
