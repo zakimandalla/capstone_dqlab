@@ -7,16 +7,17 @@ st.set_page_config(
     layout='wide'
 )
 
-st.title("Analisa PDRB per Kapita 6 Provinsi di Pulau Jawa dan Nasional Tahun 2021")
+st.title("Analisa PDRB per Kapita 6 Provinsi di Pulau Jawa Tahun 2021")
 
 #Latar Belakang
 st.markdown("""<div style="text-align: justify">
  
+Berdasarkan data Badan Pusat Statistik (BPS), PDRB per kapita di Jawa Tengah pada tahun 2021 merupakan yang terendah di Pulau Jawa. Angka tersebut sebesar Rp38,67 juta, jauh di bawah rata-rata nasional sebesar Rp62,24 juta per tahun. Empat provinsi lainnya, yaitu DI Yogyakarta, Jawa Barat, Banten, dan Jawa Timur, juga memiliki PDRB per kapita lebih rendah dari rata-rata nasional. DKI Jakarta memiliki PDRB per kapita yang tertinggi di Pulau Jawa, yaitu Rp274,71 juta per tahun (Katadata, 2022).
+
 PDRB (Produk Domestik Regional Bruto) per kapita merupakan salah satu indikator penting dalam mengukur tingkat kemakmuran suatu daerah. PDRB per kapita menggambarkan nilai tambah yang dihasilkan oleh suatu daerah dalam satu tahun dibagi dengan jumlah penduduknya. Dalam konteks Indonesia, PDRB per kapita menjadi salah satu indikator penting dalam menentukan tingkat kemajuan suatu provinsi atau daerah.
 
-Pulau Jawa merupakan salah satu pulau terbesar di Indonesia dan memiliki peran penting dalam perekonomian nasional. Terdapat enam provinsi di Pulau Jawa, yaitu Jawa Barat, Jawa Tengah, Jawa Timur, Banten, DKI Jakarta, dan Yogyakarta. Keenam provinsi ini memiliki perbedaan karakteristik dan potensi ekonomi yang berbeda-beda.
-
-Berdasarkan data Badan Pusat Statistik (BPS), PDRB per kapita di Jawa Tengah pada tahun 2021 merupakan yang terendah di Pulau Jawa. Angka tersebut sebesar Rp38,67 juta, jauh di bawah rata-rata nasional sebesar Rp62,24 juta per tahun. Empat provinsi lainnya, yaitu DI Yogyakarta, Jawa Barat, Banten, dan Jawa Timur, juga memiliki PDRB per kapita lebih rendah dari rata-rata nasional. DKI Jakarta memiliki PDRB per kapita yang tertinggi di Pulau Jawa, yaitu Rp274,71 juta per tahun. PDRB per kapita atau PDB per kapita adalah indikator penting dalam mengukur tingkat kemakmuran suatu wilayah, menunjukkan tingkat pembangunan dan pendapatan penduduk (Katadata, 2022).</div>
+Berdasarkan paparan sebelumnya. Dilakukan analisa apakah benar PDRB per kapita di pulau jawa cenderung rendah. Berikut adalah hasil analisanya :
+</div>
 """, unsafe_allow_html=True)
 
 pulau_jawa = ['INDONESIA', 'DKI JAKARTA', 'JAWA BARAT', 'JAWA TENGAH', 'JAWA TIMUR', 'BANTEN', 'DI YOGYAKARTA']
@@ -58,11 +59,18 @@ pdrbperkapita_chart = (pdrbperkapita_bar + pdrbperkapita_line)
 st.altair_chart(pdrbperkapita_chart,use_container_width=True)
 
 #Kesimpulan PDRB Per Kapita
-st.markdown("""<div style="text-align: justify">
+st.markdown("""<div style="text-align: justify; margin-bottom: 5.5em;">
  
-PDRB per Kapita 6 Provinsi di Pulau Jawa, 5 diantaranya berada dibawah rata-rata pdrb nasional.
-Selanjutnya dicari apakah faktor-faktor seperti UMP, Tingkat pengangguran, dan Sektor lapangan usaha tertentu mempengaruhi PDRB per Kapita suatu daerah.</div>
+Diagram diatas menunjukkan bahwa provinsi-provinsi di pulau jawa cenderung memiliki <span style="color:steelblue">PDRB per kapita rendah dibawah PDRB per kapita Nasional</span>. Hanya DKI Jakarta yang memiliki <span style="color:green">PDRB per kapita diatas rata-rata Nasional.</span> PDRB per kapita suatu daerah dapat dipengaruhi oleh UMP (Upah Minimum Provinsi), tingkat pengangguran, sektor usaha, jumlah penduduk, dll. Sehingga dilakukan analisa berdasarkan hipotesis-hipotesis berikut:
+1.	Apakah PDRB per kapita di Pulau Jawa cenderung rendah karena memiliki UMP rendah?
+2.	Apakah PDRB per kapita di Pulau Jawa cenderung rendah karena tingkat pengangguran yang tinggi?
+3.	Apakah PDRB per kapita di Pulau Jawa cenderung rendah karena kurangnya sektor dengan upah gaji tinggi?
+
+
+</div>
 """, unsafe_allow_html=True)
+
+ump_col, umr_col = st.columns(2)
 
 #Import data ump
 data_ump = pd.read_excel('dataset/UMP 2018-2020.xlsx')
@@ -79,7 +87,8 @@ ump_bar = alt.Chart(data_2[freq]).mark_bar().encode(
         alt.value('steelblue')  # Warna default untuk provinsi lainnya
     )
 ).properties(
-    title='UMP Tiap Provinsi di Indonesia'
+    title='UMP Tiap Provinsi di Indonesia',
+    height=500
 )
 
 ump_line = alt.Chart(data_ump[data_ump['Provinsi'] == 'INDONESIA']).mark_rule(color='green', strokeDash=[5, 2]).encode(
@@ -87,12 +96,26 @@ ump_line = alt.Chart(data_ump[data_ump['Provinsi'] == 'INDONESIA']).mark_rule(co
 )
 
 ump_chart = (ump_bar + ump_line)
-st.altair_chart(ump_chart, use_container_width=True)
+with ump_col:
+    st.altair_chart(ump_chart, use_container_width=True)
+
+#Import data umr tertinggi
+umr_tinggi = pd.read_excel('dataset/10 UMR Tertinggi 2021.xlsx')
+
+with umr_col:
+    st.dataframe(umr_tinggi, use_container_width=True)
+    st.markdown("""<div style="text-align: right">
+    Tabel 10 Kabupaten/Kota dengan UMR Tertinggi di Indonesia tahun 2021
+    </div>
+    """, unsafe_allow_html=True)
 
 #Kesimpulan UMP
 st.markdown("""<div style="text-align: justify">
  
-Dari bar chart diatas kita tahu bahwa UMP 5 dari 6 provinsi di pulau jawa berada dibawah rata-rata nasional. Sehingga dapat dikatakan bahwa UMP mempengaruhi PDRB per Kapita suatu daerah.
+Diagram diatas menunjukkan bahwa provinsi-provinsi di pulau jawa cenderung memiliki UMP rendah dibandingkan dengan rata-rata UMP Nasional. Hal ini menunjukkan bahwa UMP mempengaruhi PDRB per kapita di pulau jawa.
+
+Setelah dianalisa lebih lanjut, 10 kabupaten/kota di Indonesia dengan UMR tertinggi di tahun 2021 yang ditunjukkan pada tabel diatas (Kompas.com, 2021). 10 kabupaten/kota tersebut berlokasi di pulau jawa. Sehingga UMP cenderung rendah karena UMR di tiap kabupaten/kota yang kurang merata.
+
 
 </div>
 """, unsafe_allow_html=True)
@@ -125,7 +148,7 @@ st.altair_chart(pengangguran_chart,use_container_width=True)
 #Kesimpulan Pengangguran
 st.markdown("""<div style="text-align: justify">
  
-Dari bar chart diatas kita tahu bahwa Tingkat Pengangguran 3 Provinsi bernilai diatas rata-rata dan 3 lainnya dibawah rata-rata nasional. Sehingga Tingkat pengangguran mungkin tidak mempengaruhi PDRB per Kapita suatu daerah.
+Diagram diatas menunjukkan bahwa 3 provinsi memiliki tingkat pengangguran dibawah rata-rata nasional dan 3 provinsi memiliki tingkat pengangguran diatas rata-rata nasional yang salah satunya adalah DKI Jakarta yang memiliki PDRB per kapita tertinggi. Hal ini menunjukkan bahwa tingkat pengangguran tidak mempengaruhi PDRB per kapita di pulau jawa.
 
 </div>
 """, unsafe_allow_html=True)
@@ -151,7 +174,7 @@ Tabel diatas menampilkan rata-rata upah gaji per sektor usaha. Dari situ dilakuk
 #Import Data Sektor
 data_sektor = pd.read_excel('dataset/Persentase 6 Top Sektor di Jawa.xlsx')
 
-#Bar Chart Pengangguran
+#Bar Chart Sektor
 sektor_bar = alt.Chart(data_sektor).mark_bar().encode(
     alt.X('Provinsi', title='Provinsi'),
     alt.Y('Persen', title='Persentase'),
@@ -174,11 +197,18 @@ st.altair_chart(sektor_chart,use_container_width=True)
 #Kesimpulan Sektor
 st.markdown("""<div style="text-align: justify">
  
-Dari bar chart diatas kita tahu bahwa 4 dari 6 Provinsi di pulau jawa bernilai dibawah rata-rata persentase nasional. Sehingga persentase DPRB 6 sektor teratas mempengaruhi PDRB per Kapita suatu daerah.
+Diagram diatas menunjukkan bahwa provinsi-provinsi di pulau jawa cenderung memiliki persentase rendah terhadap distribusi PDRB 6 sektor dengan upah gaji tinggi dibandingkan dengan rata-rata nasional. Hal ini menunjukkan distribusi PDRB 6 sektor dengan upah gaji tinggi mempengaruhi PDRB per kapita di pulau jawa. 
 
-Sehingga penulis merekomendasikan untuk pemerintas dan pemilik usaha sektor terkait bekerja sama berinvestasi untuk meningkatkan segala aspek di sektor tersebut.
+Dari analisa hipotesis-hipotesis diatas, penulis memberikan saran bahwa:
+1.	Pemerintah perlu membuat strategi untuk meningkatkan UMR di daerah-daerah dengan UMR rendah.
+2.	Pemerintah dan stakeholder sektor terkait  perlu mengelola dan meningkatkan usaha di sektor dengan upah gaji tinggi.
+
+Dari saran-saran tersebut, diharapkan PDRB per kapita di pulau jawa dapat meningkat dengan lebih cepat.
+ 
 </div>
 """, unsafe_allow_html=True)
 
 #hitung data hijau
 #data_sektor[data_sektor['Provinsi'] == 'INDONESIA']['Persen']
+
+
